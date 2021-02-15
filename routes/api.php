@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/testing-the-api', function(){
-    return ['message' => 'hello'];
+// CRUD format
+// 1. get all (GET) /api/posts
+// 2. create a post (POST) /api/posts
+// 3. get a post (GET) /api/posts/{id}
+// 4. update a post (PUT/PATCH) /api/posts/{id}
+// 5. delete a post (DELETE) /api/posts/{id}
+
+Route::prefix('v1')->group(function(){
+    Route::apiResource('posts', 'PostController');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

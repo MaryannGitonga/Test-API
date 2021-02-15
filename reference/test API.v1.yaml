@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: test API
+  version: '1.0'
+  description: Manage posts.
+servers:
+  - url: 'http://127.0.0.1:8000/api/v1'
+paths:
+  /posts:
+    get:
+      summary: List Posts
+      tags: []
+      responses: {}
+      operationId: get-posts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Post'
+      parameters:
+        - schema:
+            type: string
+          in: header
+    post:
+      summary: Create Post
+      tags: []
+      responses: {}
+      operationId: post-posts
+  '/posts/{postId}':
+    parameters:
+      - schema:
+          type: string
+        name: postId
+        in: path
+        required: true
+    get:
+      summary: Get Post
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+      operationId: get-posts-postId
+    put:
+      summary: Update Post
+      tags: []
+      responses: {}
+      operationId: put-posts-postId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+    delete:
+      summary: Remove Post
+      tags: []
+      responses:
+        '204':
+          description: No Content
+      operationId: delete-posts-postId
+components:
+  schemas:
+    Post:
+      title: Post
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        slug:
+          type: string
+        likes:
+          type: integer
+          default: 0
+        content:
+          type: string
+      required:
+        - title
+  securitySchemes:
+    apiKey:
+      name: apiKey
+      type: apiKey
+      in: query
